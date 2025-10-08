@@ -1,50 +1,65 @@
-// // import 'package:get/get.dart';
-
-// // class HomeContoller extends GetxController {}
-// import 'package:get/get.dart';
-
-// class HomeController extends GetxController {
-//   // Use Rxn (Reactive Nullable) to hold the selected patient data.
-//   // It is initialized to null, meaning no patient is selected initially.
-//   var selectedPatient = Rxn<Map<String, dynamic>>();
-
-//   // Method to update the selected patient state
-//   void selectPatient(Map<String, dynamic>? patientData) {
-//     selectedPatient.value = patientData;
-//   }
-// }
-
 // import 'package:get/get.dart';
 
 // class HomeController extends GetxController {
 //   // Currently selected patient
-//   var selectedPatient = Rxn<Map<String, dynamic>>();
+//   Rx<Map<String, dynamic>?> selectedPatient = Rx<Map<String, dynamic>?>(null);
 
-//   void selectPatient(Map<String, dynamic>? patientData) {
-//     selectedPatient.value = patientData;
+//   // Currently selected action/tab for patient details
+//   RxInt selectedActionIndex = 0.obs;
+
+//   // List of actions/tabs
+//   final List<String> actions = [
+//     'Video Call',
+//     'Audio Call',
+//     'Chat',
+//     'Prescription',
+//     'History',
+//     'Reports',
+//   ];
+
+//   // Select a patient
+//   void selectPatient(Map<String, dynamic>? patient, {bool isMobile = false}) {
+//     selectedPatient.value = patient;
+//     selectedActionIndex.value = 0;
+
+//     if (isMobile && patient != null) {
+//       // Navigate to patient detail page on mobile
+//       Get.toNamed('/patientDetails', arguments: patient);
+//     }
 //   }
-// }
 
-// import 'package:get/get.dart';
-
-// class HomeController extends GetxController {
-//   // Currently selected patient
-//   var selectedPatient = Rxn<Map<String, dynamic>>();
-
-//   // Method to select a patient
-//   void selectPatient(Map<String, dynamic>? patientData) {
-//     selectedPatient.value = patientData;
+//   // Select an action/tab
+//   void selectAction(int index) {
+//     selectedActionIndex.value = index;
 //   }
 // }
 
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  // Currently selected patient
-  var selectedPatient = Rxn<Map<String, dynamic>>();
+  Rx<Map<String, dynamic>?> selectedPatient = Rx<Map<String, dynamic>?>(null);
+  RxInt selectedActionIndex = 0.obs;
 
-  // Method to select a patient
-  void selectPatient(Map<String, dynamic>? patientData) {
-    selectedPatient.value = patientData;
+  final List<String> actions = [
+    'Details',
+    'Video Call',
+    'Chat',
+    'Prescription',
+    'History',
+    'Reports',
+    'Add Bills',
+    'Payments',
+  ];
+
+  void selectPatient(Map<String, dynamic>? patient, {bool isMobile = false}) {
+    selectedPatient.value = patient;
+    selectedActionIndex.value = 0;
+    if (isMobile && patient != null) {
+      Get.toNamed('/patientDetails', arguments: patient);
+    }
+  }
+
+  void selectAction(int index) {
+    selectedActionIndex.value = index;
   }
 }
